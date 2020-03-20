@@ -16,6 +16,7 @@
 package net.arin.rdap_bootstrap.service;
 
 import net.arin.rdap_bootstrap.Constants;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +31,7 @@ import java.util.Properties;
  * Manages getting resource files.
  * @version $Rev$, $Date$
  */
+@Component
 public class ResourceFiles
 {
     public enum BootFiles

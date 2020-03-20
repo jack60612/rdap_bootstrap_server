@@ -23,10 +23,12 @@ import net.arin.rdap_bootstrap.service.JsonBootstrapFile.ServiceUrls;
 import net.arin.rdap_bootstrap.service.ResourceFiles.BootFiles;
 import net.ripe.ipresource.IpRange;
 import net.ripe.ipresource.UniqueIpResource;
+import org.springframework.stereotype.Component;
 
 /**
  * @version $Rev$, $Date$
  */
+@Component
 public class IpV4Bootstrap implements JsonBootstrapFile.Handler
 {
     private volatile HashMap<String, ServiceUrls> allocations = new HashMap<String, ServiceUrls>();

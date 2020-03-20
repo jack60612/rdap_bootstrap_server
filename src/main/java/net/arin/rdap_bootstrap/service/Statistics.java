@@ -15,6 +15,9 @@
  */
 package net.arin.rdap_bootstrap.service;
 
+import lombok.Getter;
+import org.springframework.stereotype.Component;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -26,8 +29,15 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * @version $Rev$, $Date$
  */
+@Component
 public class Statistics
 {
+    @Getter
+    private AtomicLong totalHits = new AtomicLong( 0 );
+
+    @Getter
+    private AtomicLong totalMisses = new AtomicLong( 0 );
+
     private static class LruMap<String,AtomicLong> extends LinkedHashMap<String, AtomicLong >
     {
         private final int maxEntries;
@@ -54,6 +64,8 @@ public class Statistics
         ASHITS( "Autnum Hits" );
 
         private Map<String,AtomicLong> hitsMap = Collections.synchronizedMap( new LruMap<String, AtomicLong>( 100 ) );
+
+        @Getter
         private String title;
 
         public void hit( String url )
@@ -74,27 +86,10 @@ public class Statistics
             return hitsMap.entrySet();
         }
 
-        public String getTitle()
-        {
-            return title;
-        }
-
         private UrlHits( String title )
         {
             this.title = title;
         }
     }
 
-    private AtomicLong totalHits = new AtomicLong( 0 );
-    private AtomicLong totalMisses = new AtomicLong( 0 );
-
-    public AtomicLong getTotalHits()
-    {
-        return totalHits;
-    }
-
-    public AtomicLong getTotalMisses()
-    {
-        return totalMisses;
-    }
 }

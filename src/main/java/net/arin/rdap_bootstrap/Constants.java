@@ -21,4 +21,6 @@ package net.arin.rdap_bootstrap;
 public class Constants
 {
     public final static String PROPERTY_PREFIX = "arin.rdapbootstrap.";
+
+    public final static String RDAP_CONTENT_TYPE = "application/rdap+json";
 }

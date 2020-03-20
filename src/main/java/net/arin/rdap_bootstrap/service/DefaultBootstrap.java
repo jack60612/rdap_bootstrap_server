@@ -18,9 +18,11 @@ package net.arin.rdap_bootstrap.service;
 
 import net.arin.rdap_bootstrap.service.JsonBootstrapFile.ServiceUrls;
 import net.arin.rdap_bootstrap.service.ResourceFiles.BootFiles;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
+@Component
 public class DefaultBootstrap implements JsonBootstrapFile.Handler
 {
     public enum Type {

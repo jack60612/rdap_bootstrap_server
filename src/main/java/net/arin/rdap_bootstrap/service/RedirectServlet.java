@@ -202,11 +202,6 @@ public class RedirectServlet extends HttpServlet
             {
                 serve( UrlHits.ASHITS, new MakeAutnumBase(), Type.AUTNUM, pathInfo, req, resp );
             }
-            else if ( pathInfo.startsWith( "/help" ) )
-            {
-                resp.setContentType( "application/rdap+json" );
-                makeHelp( resp.getOutputStream() );
-            }
             else
             {
                 resp.sendError( HttpServletResponse.SC_NOT_FOUND );
@@ -421,71 +416,6 @@ public class RedirectServlet extends HttpServlet
         }
         notice.setDescription( description.toArray( new String[description.size()] ) );
         return notice;
-    }
-
-    public void makeHelp( OutputStream outputStream ) throws IOException
-    {
-        Response response = new Response( null );
-        ArrayList<Notice> notices = new ArrayList<Notice>();
-
-        // do statistics
-        for ( Statistics.UrlHits stats : Statistics.UrlHits.values() )
-        {
-            notices.add( makeStatsNotice( stats ) );
-        }
-
-        // totals
-        Notice notice = new Notice();
-        notice.setTitle( "Totals" );
-        String[] description = new String[2];
-        description[0] = String.format( "Hits   = %5d", statistics.getTotalHits().get() );
-        description[1] = String.format( "Misses = %5d", statistics.getTotalMisses().get() );
-        notice.setDescription( description );
-        notices.add( notice );
-
-        // Modified dates for various bootstrap files, done this way so that
-        // Publication dates can be published as well.
-        notices.add( createPublicationDateNotice( "Default",
-            resourceFiles.getLastModified( BootFiles.DEFAULT.getKey() ),
-            defaultBootstrap.getPublication() ) );
-        notices.add( createPublicationDateNotice( "As",
-            resourceFiles.getLastModified( BootFiles.AS.getKey() ),
-            asBootstrap.getPublication() ) );
-        notices.add( createPublicationDateNotice( "Domain",
-            resourceFiles.getLastModified( BootFiles.DOMAIN.getKey() ),
-            domainBootstrap.getPublication() ) );
-        notices.add( createPublicationDateNotice( "Entity",
-            resourceFiles.getLastModified( BootFiles.ENTITY.getKey() ),
-            entityBootstrap.getPublication() ) );
-        notices.add( createPublicationDateNotice( "IpV4",
-            resourceFiles.getLastModified( BootFiles.V4.getKey() ),
-            ipV4Bootstrap.getPublication() ) );
-        notices.add( createPublicationDateNotice( "IpV6",
-            resourceFiles.getLastModified( BootFiles.V6.getKey() ),
-            ipV6Bootstrap.getPublication() ) );
-
-        response.setNotices( notices );
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion( Include.NON_EMPTY );
-        ObjectWriter writer = mapper.writer( new DefaultPrettyPrinter() );
-        writer.writeValue( outputStream, response );
-    }
-
-    private Notice createPublicationDateNotice( String file, long lastModified,
-                                                String publicationDate )
-    {
-        Notice bootFileModifiedNotice = new Notice();
-
-        bootFileModifiedNotice
-            .setTitle( String.format( "%s Bootstrap File Modified and Published Dates", file ) );
-        String[] bootFileModifiedDescription = new String[2];
-        // Date format as 2015-05-15T17:04:06-0500 (Y-m-d'T'H:M:Sz)
-        bootFileModifiedDescription[0] = String.format( "%1$tFT%1$tT%1$tz", lastModified );
-        bootFileModifiedDescription[1] = publicationDate;
-        bootFileModifiedNotice.setDescription( bootFileModifiedDescription );
-
-        return bootFileModifiedNotice;
     }
 
     private class LoadConfigTask extends TimerTask

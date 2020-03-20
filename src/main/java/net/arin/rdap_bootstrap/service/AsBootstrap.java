@@ -18,6 +18,7 @@ package net.arin.rdap_bootstrap.service;
 
 import net.arin.rdap_bootstrap.service.JsonBootstrapFile.ServiceUrls;
 import net.arin.rdap_bootstrap.service.ResourceFiles.BootFiles;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -25,6 +26,7 @@ import java.util.TreeMap;
 /**
  * @version $Rev$, $Date$
  */
+@Component
 public class AsBootstrap implements JsonBootstrapFile.Handler
 {
     private class AsRangeInfo

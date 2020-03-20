@@ -24,10 +24,12 @@ import net.arin.rdap_bootstrap.service.ResourceFiles.BootFiles;
 
 import com.googlecode.ipv6.IPv6Address;
 import com.googlecode.ipv6.IPv6Network;
+import org.springframework.stereotype.Component;
 
 /**
  * @version $Rev$, $Date$
  */
+@Component
 public class IpV6Bootstrap implements JsonBootstrapFile.Handler
 {
     private volatile TreeMap<Long, ServiceUrls> allocations = new TreeMap<Long, ServiceUrls>();
