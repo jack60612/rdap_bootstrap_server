@@ -1,5 +1,6 @@
-package net.arin.rdap_bootstrap;
+package net.arin.rdap_bootstrap.controller;
 
+import net.arin.rdap_bootstrap.Constants;
 import net.arin.rdap_bootstrap.json.Notice;
 import net.arin.rdap_bootstrap.json.Response;
 import net.arin.rdap_bootstrap.service.*;
